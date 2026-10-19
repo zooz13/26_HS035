@@ -1,0 +1,477 @@
+# Full Model-Server API Integration Check
+
+Scope: room registration, baseline registration, calibration, real-time inference, Stage 2 motion classification contract, residual presence risk assessment, OpenAPI/docs consistency, and deployment caveats.
+
+This check does not retrain models, modify model artifacts, or perform false-alarm evaluation.
+
+## Tested Endpoints
+
+- `GET /api/health`
+- `GET /api/model/status`
+- `POST /api/rooms`
+- `GET /api/rooms/{room_id}/setup/status`
+- `POST /api/rooms/{room_id}/baseline/start`
+- `POST /api/rooms/{room_id}/baseline/finish`
+- `POST /api/rooms/{room_id}/calibration/start`
+- `POST /api/rooms/{room_id}/calibration/window`
+- `POST /api/rooms/{room_id}/calibration/finish`
+- `POST /api/rooms/{room_id}/window`
+- `GET /api/rooms/{room_id}/result/latest`
+- `POST /api/rooms/{room_id}/risk-assessment`
+
+## Overall Result
+
+- Status: `staging_ready`
+- PASS: 9
+- WARN: 0
+- FAIL: 0
+
+## Scenario Results
+
+| Scenario | Status | Detail |
+| --- | --- | --- |
+| A. health and model status endpoints | `PASS` | ok |
+| A-C. room setup, empty inference, occupied inference, latest result | `PASS` | ok |
+| D. occupied window without motion_input returns HTTP 400 | `PASS` | ok |
+| E. motion_input preferred key and stage2_input compatibility alias | `PASS` | ok |
+| F. explicit residual risk scenarios | `PASS` | ok |
+| G/J. stored result history feeds risk assessment | `PASS` | ok |
+| H. negative API error handling | `PASS` | ok |
+| I. OpenAPI and docs contract consistency | `PASS` | ok |
+| K. deployment readiness caveats | `PASS` | ok |
+
+## API Contract Observations
+
+- `/api/rooms/{room_id}/risk-assessment` is present in OpenAPI.
+- `RiskAssessmentRequest` and `RiskAssessmentResult` are present in OpenAPI schemas.
+- `motion_input` is the preferred Stage 2 input key.
+- `stage2_input` remains accepted only as a deprecated compatibility alias.
+- Stage 1 `empty` skips Stage 2; Stage 1 `occupied` with Stage 2 enabled requires motion input and returns HTTP 400 when missing.
+- Risk assessment can use explicit `recent_predictions` or stored room result history.
+- `recent_buffer_seconds` trimming is covered by the `recent_buffer_trim` scenario.
+
+## Example Requests And Responses
+
+The JSON below includes representative requests plus observed responses from the integration run.
+
+```json
+{
+  "health": {
+    "status": "ok",
+    "server": "running"
+  },
+  "model_status": {
+    "server_status": "running",
+    "model_status": "threshold_ready",
+    "latest_window_id": null,
+    "latest_inference_time": null,
+    "baseline_status": "not_loaded",
+    "model_version": "stage1_threshold_v001"
+  },
+  "room_setup": {
+    "room_id": "full_api_room",
+    "status": "ready",
+    "baseline_id": "baseline_full_api_room_v001",
+    "calibration_id": "calib_full_api_room_v001",
+    "calibration_method": "guided_baseline_merge",
+    "calibration_status": "ready",
+    "global_threshold": 2.5068338100224326,
+    "effective_threshold": 2.5068338100224326,
+    "calibration_source_metadata": {
+      "source": "calibration_windows",
+      "calibration_session_id": "calib_20260802_032502",
+      "quantile": 0.95
+    },
+    "stage1_artifact_id": "stage1_threshold_v001",
+    "stage2_artifact_id": "stage2_static_moving_v001",
+    "stage2_mode": "static_moving_cnn",
+    "baseline_command": {
+      "room_id": "full_api_room",
+      "command_id": "baseline_cmd_01a31899a65c4095b48d42cabd8c22a9",
+      "baseline_session_id": "base_20260802_032502_d7c3fe68",
+      "status": "completed",
+      "created_at": "2026-08-02T03:25:02.422718+00:00",
+      "completed_at": "2026-08-02T03:25:02.424748+00:00"
+    },
+    "message": "Room is ready for inference."
+  },
+  "representative_requests": {
+    "occupied_window": {
+      "window_id": "win_occupied_example",
+      "baseline_id": "baseline_full_api_room_v001",
+      "calibration_id": "calib_full_api_room_v001",
+      "device_group_id": "full_api_group",
+      "window_start_time": "2026-06-14T06:10:05+09:00",
+      "window_end_time": "2026-06-14T06:10:10+09:00",
+      "window_duration_sec": 5,
+      "data_type": "stage1_feature_vector",
+      "feature_version": "stage1_feature_v1",
+      "features": {
+        "static_score": 1.1689446033408109,
+        "motion_score": 0.8767084525056081,
+        "shape_score": 3.5068338100224326,
+        "robust_max_shape_score": 3.5068338100224326
+      },
+      "motion_input": {
+        "input_type": "window_matrix",
+        "feature_version": "stage2_feature_v1",
+        "shape": [
+          128,
+          192
+        ],
+        "values": "<omitted matrix with shape [128, 192]>"
+      }
+    },
+    "risk_assessment_explicit": {
+      "event_timestamp": "2026-06-14T06:11:00+09:00",
+      "recent_predictions": [
+        {
+          "window_id": "occupied_static_person_0",
+          "timestamp": "2026-06-14T06:10:35+09:00",
+          "occupancy_state": "occupied",
+          "motion_state": "static_person",
+          "window_duration_sec": 5,
+          "quality": 1.0
+        },
+        {
+          "window_id": "occupied_static_person_1",
+          "timestamp": "2026-06-14T06:10:40+09:00",
+          "occupancy_state": "occupied",
+          "motion_state": "static_person",
+          "window_duration_sec": 5,
+          "quality": 1.0
+        },
+        {
+          "window_id": "occupied_static_person_2",
+          "timestamp": "2026-06-14T06:10:45+09:00",
+          "occupancy_state": "occupied",
+          "motion_state": "static_person",
+          "window_duration_sec": 5,
+          "quality": 1.0
+        },
+        {
+          "window_id": "occupied_static_person_3",
+          "timestamp": "2026-06-14T06:10:50+09:00",
+          "occupancy_state": "occupied",
+          "motion_state": "static_person",
+          "window_duration_sec": 5,
+          "quality": 1.0
+        },
+        {
+          "window_id": "occupied_static_person_4",
+          "timestamp": "2026-06-14T06:10:55+09:00",
+          "occupancy_state": "occupied",
+          "motion_state": "static_person",
+          "window_duration_sec": 5,
+          "quality": 1.0
+        },
+        {
+          "window_id": "occupied_static_person_5",
+          "timestamp": "2026-06-14T06:11:00+09:00",
+          "occupancy_state": "occupied",
+          "motion_state": "static_person",
+          "window_duration_sec": 5,
+          "quality": 1.0
+        }
+      ]
+    }
+  },
+  "empty_window_response": {
+    "room_id": "full_api_room",
+    "window_id": "win_empty",
+    "stage1": {
+      "label": "empty",
+      "score": 1.5068338100224326,
+      "threshold": 2.5068338100224326,
+      "artifact_id": "stage1_threshold_v001"
+    },
+    "stage2": {
+      "label": null,
+      "status": "skipped",
+      "reason": "stage1_empty"
+    },
+    "final_status": "empty",
+    "timestamp": "2026-06-14T06:10:05+09:00"
+  },
+  "occupied_window_response": {
+    "room_id": "full_api_room",
+    "window_id": "win_occupied",
+    "stage1": {
+      "label": "occupied",
+      "score": 3.5068338100224326,
+      "threshold": 2.5068338100224326,
+      "artifact_id": "stage1_threshold_v001"
+    },
+    "stage2": {
+      "label": "moving_person",
+      "confidence": 0.6338897347450256,
+      "status": "ok",
+      "artifact_id": "stage2_static_moving_v001",
+      "logits": [
+        -0.09202607721090317,
+        0.4569145739078522
+      ]
+    },
+    "final_status": "occupied_moving_person",
+    "timestamp": "2026-06-14T06:10:10+09:00"
+  },
+  "latest_result": {
+    "room_id": "full_api_room",
+    "latest_result": {
+      "room_id": "full_api_room",
+      "window_id": "win_occupied",
+      "stage1": {
+        "label": "occupied",
+        "score": 3.5068338100224326,
+        "threshold": 2.5068338100224326,
+        "artifact_id": "stage1_threshold_v001"
+      },
+      "stage2": {
+        "label": "moving_person",
+        "confidence": 0.6338897347450256,
+        "status": "ok",
+        "artifact_id": "stage2_static_moving_v001",
+        "logits": [
+          -0.09202607721090317,
+          0.4569145739078522
+        ]
+      },
+      "final_status": "occupied_moving_person",
+      "timestamp": "2026-06-14T06:10:10+09:00"
+    }
+  },
+  "missing_motion_input_error": {
+    "detail": "motion_input is required when occupancy is occupied and motion classification is enabled"
+  },
+  "motion_input_response": {
+    "room_id": "full_api_room",
+    "window_id": "win_motion_preferred",
+    "stage1": {
+      "label": "occupied",
+      "score": 3.5068338100224326,
+      "threshold": 2.5068338100224326,
+      "artifact_id": "stage1_threshold_v001"
+    },
+    "stage2": {
+      "label": "moving_person",
+      "confidence": 0.6338897347450256,
+      "status": "ok",
+      "artifact_id": "stage2_static_moving_v001",
+      "logits": [
+        -0.09202607721090317,
+        0.4569145739078522
+      ]
+    },
+    "final_status": "occupied_moving_person",
+    "timestamp": "2026-06-14T06:10:20+09:00"
+  },
+  "stage2_input_alias_response": {
+    "room_id": "full_api_room",
+    "window_id": "win_motion_alias",
+    "stage1": {
+      "label": "occupied",
+      "score": 3.5068338100224326,
+      "threshold": 2.5068338100224326,
+      "artifact_id": "stage1_threshold_v001"
+    },
+    "stage2": {
+      "label": "moving_person",
+      "confidence": 0.6338897347450256,
+      "status": "ok",
+      "artifact_id": "stage2_static_moving_v001",
+      "logits": [
+        -0.09202607721090317,
+        0.4569145739078522
+      ]
+    },
+    "final_status": "occupied_moving_person",
+    "timestamp": "2026-06-14T06:10:25+09:00"
+  },
+  "explicit_risk_scenarios": {
+    "stable_empty": {
+      "room_id": "full_api_room",
+      "event_timestamp": "2026-06-14T06:11:00+09:00",
+      "residual_presence": "none",
+      "risk_level": "normal",
+      "occupancy_summary": {
+        "empty_ratio": 1.0,
+        "occupied_ratio": 0.0,
+        "recent_occupied": false
+      },
+      "motion_summary": {
+        "static_ratio": 0.0,
+        "moving_ratio": 0.0,
+        "static_persistence_seconds": 0.0
+      },
+      "confidence": 0.95,
+      "reason": "stable_empty_before_event",
+      "limitations": []
+    },
+    "persistent_static": {
+      "room_id": "full_api_room",
+      "event_timestamp": "2026-06-14T06:11:00+09:00",
+      "residual_presence": "high",
+      "risk_level": "danger",
+      "occupancy_summary": {
+        "empty_ratio": 0.0,
+        "occupied_ratio": 1.0,
+        "recent_occupied": true
+      },
+      "motion_summary": {
+        "static_ratio": 1.0,
+        "moving_ratio": 0.0,
+        "static_persistence_seconds": 30.0
+      },
+      "confidence": 0.9,
+      "reason": "static_presence_persisted",
+      "limitations": []
+    },
+    "moving": {
+      "room_id": "full_api_room",
+      "event_timestamp": "2026-06-14T06:11:00+09:00",
+      "residual_presence": "medium",
+      "risk_level": "warning",
+      "occupancy_summary": {
+        "empty_ratio": 0.0,
+        "occupied_ratio": 1.0,
+        "recent_occupied": true
+      },
+      "motion_summary": {
+        "static_ratio": 0.0,
+        "moving_ratio": 1.0,
+        "static_persistence_seconds": 0.0
+      },
+      "confidence": 0.82,
+      "reason": "moving_presence_detected_but_exit_unknown",
+      "limitations": [
+        "moving_person does not confirm evacuation"
+      ]
+    },
+    "unstable": {
+      "room_id": "full_api_room",
+      "event_timestamp": "2026-06-14T06:11:00+09:00",
+      "residual_presence": "low",
+      "risk_level": "caution",
+      "occupancy_summary": {
+        "empty_ratio": 0.8333333333333334,
+        "occupied_ratio": 0.16666666666666666,
+        "recent_occupied": true
+      },
+      "motion_summary": {
+        "static_ratio": 0.0,
+        "moving_ratio": 0.0,
+        "static_persistence_seconds": 0.0
+      },
+      "confidence": 0.62,
+      "reason": "unstable_or_recent_presence",
+      "limitations": [
+        "some occupied records have unavailable motion state"
+      ]
+    },
+    "insufficient": {
+      "room_id": "full_api_room",
+      "event_timestamp": "2026-06-14T06:11:00+09:00",
+      "residual_presence": "unknown",
+      "risk_level": "unknown",
+      "occupancy_summary": {
+        "empty_ratio": 0.0,
+        "occupied_ratio": 0.0,
+        "recent_occupied": false
+      },
+      "motion_summary": {
+        "static_ratio": 0.0,
+        "moving_ratio": 0.0,
+        "static_persistence_seconds": 0.0
+      },
+      "confidence": 0.0,
+      "reason": "insufficient_input",
+      "limitations": [
+        "prediction history shorter than minimum_window_count"
+      ]
+    },
+    "low_quality": {
+      "room_id": "full_api_room",
+      "event_timestamp": "2026-06-14T06:11:00+09:00",
+      "residual_presence": "unknown",
+      "risk_level": "unknown",
+      "occupancy_summary": {
+        "empty_ratio": 0.0,
+        "occupied_ratio": 0.0,
+        "recent_occupied": false
+      },
+      "motion_summary": {
+        "static_ratio": 0.0,
+        "moving_ratio": 0.0,
+        "static_persistence_seconds": 0.0
+      },
+      "confidence": 0.0,
+      "reason": "insufficient_input",
+      "limitations": [
+        "low quality prediction records present"
+      ]
+    },
+    "recent_buffer_trim": {
+      "room_id": "full_api_room",
+      "event_timestamp": "2026-06-14T06:11:00+09:00",
+      "residual_presence": "none",
+      "risk_level": "normal",
+      "occupancy_summary": {
+        "empty_ratio": 1.0,
+        "occupied_ratio": 0.0,
+        "recent_occupied": false
+      },
+      "motion_summary": {
+        "static_ratio": 0.0,
+        "moving_ratio": 0.0,
+        "static_persistence_seconds": 0.0
+      },
+      "confidence": 0.95,
+      "reason": "stable_empty_before_event",
+      "limitations": []
+    }
+  },
+  "stored_history_risk": {
+    "room_id": "full_api_history_room",
+    "event_timestamp": "2026-06-14T06:10:35+09:00",
+    "residual_presence": "none",
+    "risk_level": "normal",
+    "occupancy_summary": {
+      "empty_ratio": 1.0,
+      "occupied_ratio": 0.0,
+      "recent_occupied": false
+    },
+    "motion_summary": {
+      "static_ratio": 0.0,
+      "moving_ratio": 0.0,
+      "static_persistence_seconds": 0.0
+    },
+    "confidence": 0.95,
+    "reason": "stable_empty_before_event",
+    "limitations": []
+  },
+  "negative_errors": {
+    "bad_timestamp": {
+      "detail": "invalid timestamp: not-a-timestamp"
+    },
+    "malformed_body": {
+      "detail": [
+        {
+          "type": "missi
+```
+
+## Known Caveats
+
+- Result history is process-local memory; it is not persisted across process restarts.
+- Result history is bounded by `state_store.max_room_result_history`; default is 1000 results per room.
+- False-alarm/disaster-event validation is outside this check.
+
+## Remaining Issues Before Dashboard Integration
+
+- Dashboard should send `motion_input` for occupied-window motion classification and keep `stage2_input` only as a backward-compatible fallback.
+- Dashboard should handle HTTP 400 when Stage 1 is occupied but motion input is missing.
+- Dashboard should call risk assessment after a disaster event with either explicit recent predictions or enough stored `/window` history.
+- A later non-staging decision is still needed for durable history persistence.
+
+## Staging Readiness
+
+Internal staging API deployment can proceed. Dashboard integration should use `motion_input`, handle HTTP 400 for missing occupied-window motion input, and call risk assessment after disaster-event detection.

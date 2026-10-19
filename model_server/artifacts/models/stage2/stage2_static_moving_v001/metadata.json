@@ -1,0 +1,46 @@
+{
+  "artifact_id": "stage2_static_moving_v001",
+  "task": "occupied_static_moving_classification",
+  "input_type": "window_matrix",
+  "input_shape": [
+    128,
+    192
+  ],
+  "feature_version": "stage2_feature_v1",
+  "label_mapping": {
+    "static_person": 0,
+    "moving_person": 1
+  },
+  "train_envs": [
+    "room1_2026-04-30",
+    "room1_2026-05-07",
+    "room2_2026-05-05",
+    "room3_2026-05-05_rep01",
+    "room3_2026-05-05_rep02",
+    "room3_2026-05-07",
+    "room5_2026-05-08"
+  ],
+  "val_envs": [
+    "room4_2026-05-07_rep01"
+  ],
+  "test_envs": [
+    "room4_2026-05-07_rep02"
+  ],
+  "excluded_envs": [],
+  "excluded_labels": [
+    "empty"
+  ],
+  "created_at": "2026-06-13T23:53:28.651273+00:00",
+  "reused_existing_checkpoint": true,
+  "source_checkpoint_path": "csi-pipeline/outputs/csi_pipeline_refactor_v1/stage2_small_cnn_packet_mean_normalized.pt",
+  "reuse_note": "Existing checkpoint was discovered and validated before export. It includes room5_2026-05-08 in checkpoint train_envs.",
+  "source_code_path": "csi-pipeline/csi_pipeline/stage2",
+  "checkpoint_file": "model.pt",
+  "model_class": "TinyCnn",
+  "preprocessing_type": "packet_mean_normalized",
+  "segment": "full_buffer",
+  "window_size": 128,
+  "stride": 64,
+  "best_epoch": 10,
+  "device_used": "cpu"
+}

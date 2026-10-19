@@ -1,0 +1,47 @@
+{
+  "model_id": "stage1_v001",
+  "task": "occupancy_detection",
+  "labels": [
+    "empty",
+    "occupied"
+  ],
+  "input_type": "window_matrix",
+  "input_shape": [
+    128,
+    192
+  ],
+  "checkpoint_file": "model.pkl",
+  "preprocess_version": "preprocess_v1",
+  "normalization_version": "norm_v1_log_amp_empty_robust_zscore",
+  "feature_version": "stage1_window_features_v1",
+  "trained_at": "2026-06-13T21:39:53.318494+00:00",
+  "train_split": [
+    "room1_2026-04-30",
+    "room1_2026-05-07",
+    "room2_2026-05-05",
+    "room3_2026-05-05_rep01",
+    "room3_2026-05-05_rep02",
+    "room3_2026-05-07"
+  ],
+  "val_split": [
+    "room4_2026-05-07_rep01"
+  ],
+  "test_split": [
+    "room4_2026-05-07_rep02"
+  ],
+  "excluded_groups": [
+    "room4_2026-05-20",
+    "room4_2026-05-27",
+    "room5_2026-05-08"
+  ],
+  "source_training_code": "model_server/scripts/train_stage1_model.py",
+  "metrics_summary": {
+    "test_accuracy": 0.8635593220338983,
+    "test_macro_f1": 0.8033315010181253,
+    "test_empty_recall": 0.5366568914956011,
+    "test_occupied_recall": 0.9964243146603099
+  },
+  "legacy_status": "legacy_logreg_server_integration_proof_of_concept",
+  "not_final_stage1_pipeline": true,
+  "legacy_reason": "This artifact loads model.pkl and learned logistic-regression weights. The verified project Stage 1 design is a baseline-relative threshold detector."
+}

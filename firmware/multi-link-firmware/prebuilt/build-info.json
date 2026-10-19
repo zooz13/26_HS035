@@ -1,0 +1,46 @@
+{
+  "firmware_version": "3.0.0",
+  "idf_version": "ESP-IDF v6.0.1",
+  "target": "esp32s3",
+  "source_files": [
+    {
+      "path": "csi_node/CMakeLists.txt",
+      "sha256": "c8e72399a12e85101d59af91d943448b58fdf1ff05073e2ed09fe93be1279833"
+    },
+    {
+      "path": "csi_node/sdkconfig.defaults",
+      "sha256": "d81cb4b661416ad19741b3da1c8c1e4a065bf449f68b53c00c5c22a701c8ca9a"
+    },
+    {
+      "path": "csi_node/main/CMakeLists.txt",
+      "sha256": "aa87929e31f6cf0de62b3007b427cac2fe52282464692e638535b11c13fda2fb"
+    },
+    {
+      "path": "csi_node/main/app_main.c",
+      "sha256": "59b2f8272d0c6ce35d621b765fb0045f62a67eb5438450f850d1d21a29d1bc0e"
+    },
+    {
+      "path": "csi_node/main/node_protocol.h",
+      "sha256": "60c0a0b5c5fc40419b30f5bb6596ee9f68010ea62d8e8a5b3c8cc3c52cd95ae9"
+    }
+  ],
+  "binary_files": [
+    "bootloader/bootloader.bin",
+    "partition_table/partition-table.bin",
+    "csi_node.bin"
+  ],
+  "flash_settings": {
+    "flash_mode": "dio",
+    "flash_size": "2MB",
+    "flash_freq": "80m"
+  },
+  "flash_files": {
+    "0x0": "bootloader/bootloader.bin",
+    "0xa000": "partition_table/partition-table.bin",
+    "0x20000": "csi_node.bin"
+  },
+  "app_sha256": "b5774aa2eac115b610943a13ae84a3b04615fd5326105bb12a0b474c5b34e556",
+  "app_bytes": 743360,
+  "source_hash_note": "Build inputs and source hashes use canonical UTF-8 LF bytes, matching the repository files.",
+  "hardware_validation": "This binary has not been flashed or hardware-tested. RR4 four-board timing, reception, and loss rates require measurement. Earlier two-board 1X3/2X2 results belong to a different binary."
+}

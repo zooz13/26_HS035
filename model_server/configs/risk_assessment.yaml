@@ -1,0 +1,10 @@
+recent_buffer_seconds: 60
+stable_empty_ratio: 0.9
+occupied_ratio_threshold: 0.7
+static_ratio_threshold: 0.6
+moving_ratio_threshold: 0.5
+static_persistence_seconds: 30
+recent_occupied_seconds: 10
+minimum_window_count: 6
+default_window_duration_sec: 5
+minimum_quality: 0.5

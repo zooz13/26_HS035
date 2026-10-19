@@ -1,0 +1,8 @@
+# Preserve collected data bytes; do not normalize line endings.
+# Only text conversion is disabled; filters and other attributes are unchanged.
+*.csv -text
+*.tsv -text
+*.jsonl -text
+metadata.json -text
+*.log -text
+*.bin -text

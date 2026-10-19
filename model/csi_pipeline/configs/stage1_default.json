@@ -1,0 +1,14 @@
+{
+  "stage": "stage1",
+  "type": "baseline_relative_threshold_detector",
+  "preprocessing_type": "gain_mul_corrected",
+  "feature_set": "baseline_plus_shape",
+  "detector": "robust_max_shape",
+  "threshold_policy": "balanced_macro",
+  "calibration": {
+    "initial_empty_seconds": 20,
+    "guided_recalibration_ratio": 0.2,
+    "merge_method": "merge_recalibration"
+  }
+}
+

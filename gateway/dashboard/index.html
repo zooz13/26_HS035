@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESP32 CSI Gateway Monitor</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">LOCAL MONITOR</p>
+        <h1>ESP32 CSI Gateway</h1>
+      </div>
+      <div class="header-status">
+        <span id="snapshot-badge" class="badge neutral">Loading</span>
+        <span id="updated-at">Waiting for status.json</span>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>Gateway</h2>
+        <div class="grid">
+          <article class="card"><span>Gateway</span><strong data-path="gateway.gateway_id">-</strong></article>
+          <article class="card"><span>Device</span><strong data-path="gateway.device_id">-</strong></article>
+          <article class="card"><span>Link</span><strong data-path="gateway.link_id">-</strong></article>
+          <article class="card"><span>Uptime</span><strong data-path="gateway.uptime_sec" data-format="duration">-</strong></article>
+          <article class="card"><span>Serial Port</span><strong data-path="gateway.serial_port">-</strong></article>
+          <article class="card"><span>AWS Region</span><strong data-path="gateway.aws_region">-</strong></article>
+          <article class="card"><span>S3 Upload</span><strong data-path="gateway.s3_upload_enabled" data-format="enabled">-</strong></article>
+          <article class="card"><span>Realtime Send</span><strong data-path="gateway.realtime_send_enabled" data-format="enabled">-</strong></article>
+          <article class="card"><span>Gateway Mode</span><strong data-path="gateway.mode">-</strong></article>
+          <article class="card wide"><span>Started At</span><strong data-path="gateway.started_at">-</strong></article>
+          <article class="card wide"><span>Gateway Time</span><strong data-path="gateway.current_time">-</strong></article>
+        </div>
+      </section>
+
+      <section>
+        <h2>UART</h2>
+        <div class="grid">
+          <article class="card"><span>Connection</span><strong data-path="uart.serial_connected" data-format="connected">-</strong></article>
+          <article class="card"><span>FPS 1s</span><strong data-path="uart.fps_1s" data-format="number">-</strong></article>
+          <article class="card"><span>FPS 5s</span><strong data-path="uart.fps_5s" data-format="number">-</strong></article>
+          <article class="card"><span>Total Lines</span><strong data-path="uart.total_lines" data-format="integer">-</strong></article>
+          <article class="card"><span>Valid Frames</span><strong data-path="uart.valid_frames" data-format="integer">-</strong></article>
+          <article class="card"><span>Parse Errors</span><strong data-path="uart.parse_errors" data-format="integer">-</strong></article>
+          <article class="card"><span>Ignored Lines</span><strong data-path="uart.ignored_lines" data-format="integer">-</strong></article>
+          <article class="card wide"><span>Last Connected</span><strong data-path="uart.last_connected_at">-</strong></article>
+          <article class="card wide"><span>Last Received</span><strong data-path="uart.last_received_at">-</strong></article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-heading">
+          <div>
+            <h2>TX Firmware Control</h2>
+            <p>RX UART를 통해 TX의 패킷 전송률과 송신 전력 상한을 변경합니다.</p>
+          </div>
+          <span class="badge neutral" id="firmware-ready-badge">Not ready</span>
+        </div>
+        <div class="control-layout">
+          <form id="firmware-settings-form" class="control-panel">
+            <label>
+              <span>Packet rate</span>
+              <div class="input-unit">
+                <input id="firmware-rate" name="rate_hz" type="number" min="1" max="200" step="1" value="40" required disabled>
+                <small>Hz</small>
+              </div>
+            </label>
+            <label>
+              <span>TX power ceiling</span>
+              <div class="input-unit">
+                <input id="firmware-power" name="tx_power_dbm" type="number" min="2" max="20" step="0.25" value="20" required disabled>
+                <small>dBm</small>
+              </div>
+            </label>
+            <div class="control-actions">
+              <button type="submit" class="primary" disabled>Apply &amp; save</button>
+              <button type="button" id="firmware-refresh" disabled>Read current</button>
+              <button type="button" id="firmware-reset" class="danger" disabled>Reset defaults</button>
+            </div>
+            <p id="firmware-control-message" class="control-message">Waiting for RX control protocol.</p>
+          </form>
+          <div class="grid compact firmware-status">
+            <article class="card"><span>Protocol</span><strong data-path="firmware.protocol_version">-</strong></article>
+            <article class="card"><span>Command</span><strong data-path="firmware.last_command">-</strong></article>
+            <article class="card"><span>Pending</span><strong data-path="firmware.command_pending" data-format="yesno">-</strong></article>
+            <article class="card"><span>Status Code</span><strong data-path="firmware.last_status_code">-</strong></article>
+            <article class="card"><span>Applied Rate</span><strong data-path="firmware.actual_rate_hz" data-suffix=" Hz">-</strong></article>
+            <article class="card"><span>Applied Power</span><strong data-path="firmware.actual_tx_power_dbm" data-suffix=" dBm">-</strong></article>
+            <article class="card wide"><span>RX MAC</span><strong data-path="firmware.receiver_mac">-</strong></article>
+            <article class="card wide"><span>Last ACK</span><strong data-path="firmware.last_ack_at">-</strong></article>
+            <article class="card wide"><span>Last Error</span><strong data-path="firmware.last_error">-</strong></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="split">
+        <div>
+          <h2>CSI Quality</h2>
+          <div class="grid compact">
+            <article class="card"><span>RSSI Latest</span><strong data-path="csi_quality.latest_rssi" data-suffix=" dBm">-</strong></article>
+            <article class="card"><span>Noise Latest</span><strong data-path="csi_quality.latest_noise_floor" data-suffix=" dBm">-</strong></article>
+            <article class="card"><span>RSSI Min 5s</span><strong data-path="csi_quality.rssi_min_5s" data-suffix=" dBm">-</strong></article>
+            <article class="card"><span>RSSI Max 5s</span><strong data-path="csi_quality.rssi_max_5s" data-suffix=" dBm">-</strong></article>
+            <article class="card"><span>RSSI Avg 5s</span><strong data-path="csi_quality.rssi_avg_5s" data-format="number" data-suffix=" dBm">-</strong></article>
+            <article class="card"><span>Noise Avg 5s</span><strong data-path="csi_quality.noise_floor_avg_5s" data-format="number" data-suffix=" dBm">-</strong></article>
+          </div>
+        </div>
+
+        <div>
+          <h2>Realtime Window</h2>
+          <div class="grid compact">
+            <article class="card"><span>Current Frames</span><strong data-path="windows.current_realtime_frame_count" data-format="integer">-</strong></article>
+            <article class="card"><span>Last Frames</span><strong data-path="windows.last_window_frame_count" data-format="integer">-</strong></article>
+            <article class="card"><span>128 Packets</span><strong data-path="windows.minimum_packets_met" data-format="met">-</strong></article>
+            <article class="card"><span>Motion Input</span><strong data-path="windows.motion_input_created" data-format="created">-</strong></article>
+            <article class="card"><span>Window Result</span><strong data-path="windows.last_skipped" data-format="skipped">-</strong></article>
+            <article class="card"><span>Motion Shape</span><strong data-path="windows.motion_input_shape">-</strong></article>
+            <article class="card wide"><span>Last Window</span><strong data-path="windows.last_window_id">-</strong></article>
+            <article class="card wide"><span>Skip Reason</span><strong data-path="windows.last_skip_reason">-</strong></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="split">
+        <div>
+          <h2>Baseline</h2>
+          <div class="grid compact">
+            <article class="card"><span>Loaded</span><strong data-path="baseline.loaded" data-format="yesno">-</strong></article>
+            <article class="card"><span>Valid</span><strong data-path="baseline.valid" data-format="yesno">-</strong></article>
+            <article class="card"><span>Collecting</span><strong data-path="baseline.collection_in_progress" data-format="yesno">-</strong></article>
+            <article class="card"><span>Collected Packets</span><strong data-path="baseline.collection_packet_count">-</strong></article>
+            <article class="card"><span>Elapsed</span><strong data-path="baseline.collection_elapsed_sec" data-format="duration">-</strong></article>
+            <article class="card"><span>Target Duration</span><strong data-path="baseline.collection_duration_sec" data-format="duration">-</strong></article>
+            <article class="card wide"><span>Setup Status</span><strong data-path="baseline.setup_status">-</strong></article>
+            <article class="card wide"><span>Baseline ID</span><strong data-path="baseline.baseline_id">-</strong></article>
+            <article class="card wide"><span>Calibration ID</span><strong data-path="baseline.calibration_id">-</strong></article>
+            <article class="card wide"><span>State Path</span><strong data-path="baseline.path">-</strong></article>
+            <article class="card wide"><span>Last Loaded</span><strong data-path="baseline.last_loaded_at">-</strong></article>
+            <article class="card wide"><span>Last Error</span><strong data-path="baseline.last_error">-</strong></article>
+          </div>
+        </div>
+
+        <div>
+          <h2>Stage-1 Scores</h2>
+          <div class="score-grid">
+            <article class="score"><span>Static</span><strong data-path="scores.static_score" data-format="score">-</strong></article>
+            <article class="score"><span>Motion</span><strong data-path="scores.motion_score" data-format="score">-</strong></article>
+            <article class="score"><span>Shape</span><strong data-path="scores.shape_score" data-format="score">-</strong></article>
+            <article class="score accent"><span>Robust Max</span><strong data-path="scores.robust_max_shape_score" data-format="score">-</strong></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="split">
+        <div>
+          <h2>Realtime HTTP</h2>
+          <div class="detail-list">
+            <div><span>Enabled</span><strong data-path="realtime.send_enabled" data-format="enabled">-</strong></div>
+            <div><span>Last Payload</span><strong data-path="realtime.last_payload_created_at">-</strong></div>
+            <div><span>Payload Path</span><strong data-path="realtime.last_payload_path">-</strong></div>
+            <div><span>HTTP Success</span><strong data-path="realtime.last_http_success" data-format="success">-</strong></div>
+            <div><span>Status Code</span><strong data-path="realtime.last_http_status_code">-</strong></div>
+            <div><span>Pending Spool</span><strong data-path="realtime.pending_spool_count" data-format="integer">-</strong></div>
+            <div><span>Last Error</span><strong data-path="realtime.last_http_error">-</strong></div>
+          </div>
+        </div>
+
+        <div>
+          <h2>S3 / Rawlog</h2>
+          <div class="detail-list">
+            <div><span>Rawlog Enabled</span><strong data-path="s3.rawlog_enabled" data-format="enabled">-</strong></div>
+            <div><span>S3 Upload</span><strong data-path="s3.upload_enabled" data-format="enabled">-</strong></div>
+            <div><span>Upload Success</span><strong data-path="s3.last_upload_success" data-format="success">-</strong></div>
+            <div><span>Pending Spool</span><strong data-path="s3.pending_spool_count" data-format="integer">-</strong></div>
+            <div><span>Last Rawlog</span><strong data-path="s3.last_rawlog_path">-</strong></div>
+            <div><span>Last Error</span><strong data-path="s3.last_error">-</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Recent Files</h2>
+        <div class="detail-list files">
+          <div><span>Rawlog</span><strong data-path="files.latest_rawlog">-</strong></div>
+          <div><span>Preprocessed</span><strong data-path="files.latest_preprocessed">-</strong></div>
+          <div><span>Dry-run Payload</span><strong data-path="files.latest_dryrun_payload">-</strong></div>
+        </div>
+      </section>
+    </main>
+
+    <footer>Local gateway dashboard · Firmware controls are available only through the built-in localhost server</footer>
+    <script src="app.js"></script>
+  </body>
+</html>

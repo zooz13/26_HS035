@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wi-Fi CSI 위험도 판단 대시보드</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">ESP 기반 위험도 판단</p>
+          <h1>Wi-Fi CSI 실내 잔류 위험도 대시보드</h1>
+        </div>
+        <div class="connection-box" id="connectionBox">
+          <span class="dot dot-gray"></span>
+          <span id="connectionText">API 연결 준비 중</span>
+        </div>
+      </header>
+
+      <main class="dashboard-stack">
+        <section class="card risk-card" aria-labelledby="riskOverviewTitle">
+          <div class="card-header risk-card-header">
+            <div>
+              <h2 id="riskOverviewTitle">1. 위험도 분류</h2>
+              <p>재난 이벤트 발생 전에는 정상으로 표시하고, 재난 이벤트 발생 후 최신 모델 결과에 따라 색상을 변경합니다.</p>
+            </div>
+            <div class="button-row">
+              <button id="manualDisasterBtn" class="primary-button">재난 이벤트 발생</button>
+              <button id="clearAlertsBtn" class="secondary-button">위험 표시 초기화</button>
+            </div>
+          </div>
+          <div id="riskOverviewPanel"></div>
+        </section>
+
+        <section class="dashboard-grid">
+          <section class="card room-registration-card" aria-labelledby="roomRegistrationTitle">
+            <div class="card-header stacked">
+              <div>
+                <h2 id="roomRegistrationTitle">2. 방 정보 등록</h2>
+                <p>Model Server에 room을 등록하고, 이후 API 호출 기준 room을 설정합니다.</p>
+              </div>
+            </div>
+
+            <form id="roomRegistrationForm" class="room-form">
+              <label class="form-field">
+                <span>Room ID</span>
+                <input id="roomIdInput" name="room_id" type="text" autocomplete="off" required placeholder="room_101" />
+              </label>
+
+              <label class="form-field">
+                <span>Room 이름</span>
+                <input id="roomNameInput" name="room_name" type="text" autocomplete="off" required placeholder="실험실 101" />
+              </label>
+
+              <label class="form-field">
+                <span>Device Group ID</span>
+                <input id="deviceGroupIdInput" name="device_group_id" type="text" autocomplete="off" required placeholder="esp_group_101" />
+              </label>
+
+              <button id="registerRoomBtn" class="primary-button full-width" type="submit">방 정보 등록</button>
+            </form>
+
+            <div id="roomRegistrationPanel" class="room-registration-panel"></div>
+          </section>
+
+          <section class="card" aria-labelledby="systemStatusTitle">
+            <div class="card-header">
+              <div>
+                <h2 id="systemStatusTitle">3. 현재 시스템 상태</h2>
+                <p>모델 서버, CSI 입력, 마지막 수신/추론 시간을 확인합니다.</p>
+              </div>
+              <button id="refreshStatusBtn" class="secondary-button">상태 조회</button>
+            </div>
+            <div id="systemStatusPanel" class="status-grid"></div>
+          </section>
+
+          <section class="card" aria-labelledby="baselineTitle">
+            <div class="card-header stacked">
+              <div>
+                <h2 id="baselineTitle">4. Baseline 설정</h2>
+                <p>현재 room의 baseline과 calibration 설정 상태를 표시합니다.</p>
+              </div>
+            </div>
+            <div id="baselinePanel"></div>
+            <div class="baseline-actions">
+              <button id="resetBaselineBtn" class="primary-button">baseline 수집 시작 요청</button>
+              <button id="startCalibrationBtn" class="secondary-button">calibration 시작 요청</button>
+            </div>
+          </section>
+
+          <section class="card" aria-labelledby="latestResultTitle">
+            <div class="card-header">
+              <div>
+                <h2 id="latestResultTitle">5. 최신 모델 분류 결과</h2>
+                <p>Stage 1, Stage 2, 최종 모델 판단을 표시합니다.</p>
+              </div>
+              <button id="refreshResultBtn" class="secondary-button">결과 조회</button>
+            </div>
+            <div id="latestResultPanel" class="result-layout"></div>
+          </section>
+
+          <section class="card event-log-card grid-span-2" aria-labelledby="eventLogTitle">
+            <div class="card-header">
+              <div>
+                <h2 id="eventLogTitle">6. 이벤트 로그</h2>
+                <p>위험 이벤트와 시스템 오류를 시간순으로 표시합니다.</p>
+              </div>
+              <button id="loadLogsBtn" class="secondary-button">로그 조회</button>
+            </div>
+            <div class="table-wrap compact-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>시간</th>
+                    <th>등급</th>
+                    <th>장치/Room</th>
+                    <th>Stage 1</th>
+                    <th>Stage 2</th>
+                    <th>최종/위험도</th>
+                    <th>내용</th>
+                  </tr>
+                </thead>
+                <tbody id="eventLogBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>

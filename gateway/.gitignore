@@ -1,0 +1,41 @@
+# Secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+
+# Python environments and generated files
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+.pytest_cache/
+pytest-cache-files-*/
+.coverage
+.coverage.*
+htmlcov/
+
+# Gateway runtime data
+data/
+dashboard/status.json
+dashboard/.status.json.*.tmp
+*.log
+
+# Local-only projects and work products
+model_server-main/
+outputs/
+work/
+
+# Build and packaging output
+build/
+dist/
+*.egg-info/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

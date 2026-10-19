@@ -1,0 +1,9 @@
+fastapi
+boto3
+uvicorn
+pytest
+httpx
+numpy
+pandas
+torch
+scikit-learn

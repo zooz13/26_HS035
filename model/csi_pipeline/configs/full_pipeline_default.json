@@ -1,0 +1,6 @@
+{
+  "stage1_config": "configs/stage1_default.json",
+  "stage2_config": "configs/stage2_default.json",
+  "use_stage2_only_if_stage1_occupied": true
+}
+

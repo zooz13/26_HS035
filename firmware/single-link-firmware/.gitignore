@@ -1,0 +1,27 @@
+# ESP-IDF generated files
+build/
+sdkconfig
+sdkconfig.old
+dependencies.lock
+managed_components/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local artifacts and captures
+*.bin
+*.elf
+*.map
+firmware_backups/
+captures/
+data/
+
+# Versioned RX installation package and reproducible component resolution
+!prebuilt/rx/**/*.bin
+!csi_recv/dependencies.lock
+__pycache__/
+.pytest_cache/
+*.py[cod]

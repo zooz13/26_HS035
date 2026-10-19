@@ -1,0 +1,61 @@
+{
+  "firmware_version": "2.0.0-rx-b64",
+  "output_format": "CSI_DATA_B64",
+  "field_count": 28,
+  "csi_encoding": "RFC4648 base64 of raw signed-int8 bytes",
+  "idf_version": "ESP-IDF v6.0.1",
+  "target": "esp32s3",
+  "source_files": [
+    {
+      "path": "csi_recv/CMakeLists.txt",
+      "sha256": "e014978647330c4085192f5fb95f418d9bba2d80257eea7246eccaf375ffb22a"
+    },
+    {
+      "path": "csi_recv/sdkconfig.defaults",
+      "sha256": "a2eb9b9f20b99aa3edd4ac4f4657a4ae7beef1fcb451cc3f90e8621cbf3e3d7e"
+    },
+    {
+      "path": "csi_recv/main/CMakeLists.txt",
+      "sha256": "47114157940dc826fa2b7f81beeb00d95b0249d410ea516565916871a4247846"
+    },
+    {
+      "path": "csi_recv/main/app_main.c",
+      "sha256": "b06d654be0b1672a7773256180cc341fe4e3c14bf333c2a5a2ae09912a269dcd"
+    },
+    {
+      "path": "csi_recv/main/rx_csi_format.h",
+      "sha256": "29540f32c8aea244d1152fa6b66a24aeadbb4c43be9e7fdd6585660b9dbaed24"
+    },
+    {
+      "path": "csi_recv/main/csi_control_protocol.h",
+      "sha256": "0c522653bee5a1f5098424b5d027a2d9895e6670ed181266151c192d1037b31b"
+    },
+    {
+      "path": "csi_recv/main/idf_component.yml",
+      "sha256": "90f2c799cf32a6b5afffcb231fdb23be4d93900b4d8acbd291a556f2713c38c8"
+    },
+    {
+      "path": "csi_recv/dependencies.lock",
+      "sha256": "d0dd1d7ae1793d1a2c21043f6eef2ee785bcce258bf897756f9114480cd1e47c"
+    }
+  ],
+  "binary_files": [
+    "bootloader/bootloader.bin",
+    "partition_table/partition-table.bin",
+    "csi_recv.bin"
+  ],
+  "flash_settings": {
+    "flash_mode": "dio",
+    "flash_size": "2MB",
+    "flash_freq": "80m"
+  },
+  "flash_files": {
+    "0x0": "bootloader/bootloader.bin",
+    "0xa000": "partition_table/partition-table.bin",
+    "0x20000": "csi_recv.bin"
+  },
+  "app_sha256": "a1247e5156aa132767d5d64b3ea58cd79acc0425d59c2780b8d3ff42eec39404",
+  "app_bytes": 754576,
+  "source_hash_note": "Build inputs and source hashes use canonical UTF-8 LF bytes, matching the repository files.",
+  "hardware_validation": "This binary has not been flashed or hardware-tested. RX Base64 reception, queue overflow, and collector compatibility require hardware measurement. Earlier fixed TX/RX results belong to a different binary."
+}

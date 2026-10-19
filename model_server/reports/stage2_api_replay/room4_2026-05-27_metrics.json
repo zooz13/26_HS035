@@ -1,0 +1,39 @@
+{
+  "stage1_empty_recall": 0.9829059829059829,
+  "stage1_occupied_recall": 0.9718640093786636,
+  "stage2_conditional_accuracy": 0.9372738238841978,
+  "stage2_conditional_macro_f1": 0.9372693512147988,
+  "stage2_static_recall": 0.8953488372093024,
+  "stage2_moving_recall": 0.9824561403508771,
+  "end_to_end_static_recall": 0.8912037037037037,
+  "end_to_end_moving_recall": 0.9311163895486936,
+  "stage1_missed_static_count": 2,
+  "stage1_missed_moving_count": 22,
+  "stage2_confusion_matrix": [
+    [
+      385,
+      45
+    ],
+    [
+      7,
+      392
+    ]
+  ],
+  "pipeline_confusion_summary": {
+    "stage1_empty_skipped": 599,
+    "stage1_occupied_stage2_ok": 839,
+    "empty_false_alarms_to_stage2": 10
+  },
+  "target_env": "room4_2026-05-27",
+  "mode": "guided_baseline_merge",
+  "stage2_mode": "static_moving_cnn",
+  "stage2_artifact_id": "stage2_static_moving_v001",
+  "stage2_input_type": "window_matrix",
+  "stage2_input_shape": [
+    128,
+    192
+  ],
+  "effective_threshold": 2.5068338100224326,
+  "calibration_windows_excluded_from_test": true,
+  "latest_result_verified": true
+}

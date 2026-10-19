@@ -1,0 +1,23 @@
+{
+  "calibration_id": "calib_default_v001",
+  "stage1_artifact_id": "stage1_threshold_v001",
+  "baseline_id": "provided_by_preprocessor",
+  "method": "empty_quantile",
+  "empty_quantile": 0.95,
+  "margin": 0.0,
+  "threshold": 2.5068338100224326,
+  "num_windows": 0,
+  "score_summary": {
+    "p50": 0.0,
+    "p90": 0.0,
+    "p95": 0.0,
+    "p99": 0.0
+  },
+  "api_draft": [
+    "POST /api/calibration/start",
+    "POST /api/calibration/window",
+    "POST /api/calibration/finish",
+    "GET /api/calibration/status",
+    "POST /api/calibration/reset"
+  ]
+}

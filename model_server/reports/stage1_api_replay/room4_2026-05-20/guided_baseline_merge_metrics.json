@@ -1,0 +1,137 @@
+{
+  "total_windows": 1292,
+  "empty_windows": 566,
+  "occupied_windows": 726,
+  "true_empty": 566,
+  "true_occupied": 726,
+  "predicted_empty": 597,
+  "predicted_occupied": 695,
+  "accuracy": 0.9760061919504643,
+  "macro_f1": 0.9757645875677634,
+  "empty_precision": 0.948073701842546,
+  "empty_recall": 1.0,
+  "empty_f1": 0.9733447979363714,
+  "occupied_precision": 1.0,
+  "occupied_recall": 0.9573002754820936,
+  "occupied_f1": 0.9781843771991555,
+  "static_person_recall": 0.9256198347107438,
+  "moving_person_recall": 0.9889807162534435,
+  "empty_false_alarm_rate": 0.0,
+  "occupied_miss_rate": 0.04269972451790638,
+  "confusion_matrix": [
+    [
+      566,
+      0
+    ],
+    [
+      31,
+      695
+    ]
+  ],
+  "score_summary": {
+    "p50": 4.336361646652222,
+    "p90": 7.226846694946289,
+    "p95": 7.36568021774292,
+    "p99": 8.053860597610472
+  },
+  "label_distribution": {
+    "true": {
+      "empty": 566,
+      "static_person": 363,
+      "moving_person": 363
+    },
+    "predicted_stage1": {
+      "occupied": 695,
+      "empty": 597
+    },
+    "stage2": {
+      "moving_person": 695
+    }
+  },
+  "per_session_metrics": {
+    "S02": {
+      "label": "static_person",
+      "windows": 363,
+      "recall": 0.9256198347107438,
+      "predicted_occupied": 336,
+      "predicted_empty": 27
+    },
+    "S03": {
+      "label": "moving_person",
+      "windows": 363,
+      "recall": 0.9889807162534435,
+      "predicted_occupied": 359,
+      "predicted_empty": 4
+    },
+    "S04": {
+      "label": "empty",
+      "windows": 566,
+      "recall": 1.0,
+      "predicted_occupied": 0,
+      "predicted_empty": 566
+    }
+  },
+  "target_env": "room4_2026-05-20",
+  "mode": "guided_baseline_merge",
+  "api_mode": "testclient",
+  "room_id": "room4_2026-05-20__guided_baseline_merge",
+  "stage1_artifact_id": "stage1_threshold_v001",
+  "stage1_artifact_path": "C:\\이게외않되\\model_server\\artifacts\\models\\stage1\\stage1_threshold_v001",
+  "threshold_source": "stage1_threshold_config.json global threshold retained after guided baseline merge",
+  "global_threshold": 2.5068338100224326,
+  "selected_threshold": 2.5068338100224326,
+  "effective_threshold": 2.5068338100224326,
+  "calibration_method": "guided_baseline_merge",
+  "calibration_window_count": 140,
+  "excluded_calibration_window_count": 140,
+  "test_window_count": 1292,
+  "calibration_windows_excluded_from_test": true,
+  "baseline_session": "S01",
+  "baseline_rows": 1815,
+  "guided_calibration_session": "S04",
+  "guided_calibration_rows": 9080,
+  "s01_label": "empty",
+  "s04_label": "empty",
+  "scenario_label_source": "scenario.md via csi_pipeline.data.parse_scenario/load_env",
+  "leakage": {
+    "threshold_fitting_source": "metrics_global.json train_groups",
+    "threshold_train_groups": [
+      "room1_2026-04-30",
+      "room1_2026-05-07",
+      "room2_2026-05-05",
+      "room3_2026-05-05_rep01",
+      "room3_2026-05-05_rep02",
+      "room3_2026-05-07"
+    ],
+    "leakage_warning": false,
+    "message": "target_env not found in threshold fitting groups"
+  },
+  "api_state": {
+    "negative_window_rejected": true,
+    "setup_status": {
+      "room_id": "room4_2026-05-20__guided_baseline_merge",
+      "status": "ready",
+      "baseline_id": "baseline_room4_2026-05-20__guided_baseline_merge_v001",
+      "calibration_id": "calib_room4_2026-05-20__guided_baseline_merge_v001",
+      "stage1_artifact_id": "stage1_threshold_v001",
+      "stage2_artifact_id": "stage2_static_moving_v001",
+      "stage2_mode": "static_moving_cnn",
+      "message": "Room is ready for inference."
+    },
+    "latest_result_verified": true
+  },
+  "offline_expected_guided": {
+    "macro_f1": 0.975765,
+    "empty_recall": 1.0,
+    "occupied_recall": 0.9573,
+    "static_person_recall": 0.92562,
+    "moving_person_recall": 0.988981
+  },
+  "offline_delta_guided": {
+    "macro_f1": -4.1243223658504746e-07,
+    "empty_recall": 0.0,
+    "occupied_recall": 2.7548209358130293e-07,
+    "static_person_recall": -1.6528925617098622e-07,
+    "moving_person_recall": -2.8374655647311897e-07
+  }
+}

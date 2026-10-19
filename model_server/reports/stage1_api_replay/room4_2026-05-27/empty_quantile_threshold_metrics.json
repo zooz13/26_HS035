@@ -1,0 +1,152 @@
+{
+  "total_windows": 1438,
+  "empty_windows": 585,
+  "occupied_windows": 853,
+  "true_empty": 585,
+  "true_occupied": 853,
+  "predicted_empty": 715,
+  "predicted_occupied": 723,
+  "accuracy": 0.9054242002781642,
+  "macro_f1": 0.9045450995704802,
+  "empty_precision": 0.813986013986014,
+  "empty_recall": 0.9948717948717949,
+  "empty_f1": 0.8953846153846154,
+  "occupied_precision": 0.995850622406639,
+  "occupied_recall": 0.8440797186400938,
+  "occupied_f1": 0.9137055837563451,
+  "static_person_recall": 0.9861111111111112,
+  "moving_person_recall": 0.6983372921615202,
+  "empty_false_alarm_rate": 0.00512820512820511,
+  "occupied_miss_rate": 0.1559202813599062,
+  "confusion_matrix": [
+    [
+      582,
+      3
+    ],
+    [
+      133,
+      720
+    ]
+  ],
+  "score_summary": {
+    "p50": 8.88437271118164,
+    "p90": 20.0,
+    "p95": 20.0,
+    "p99": 20.0
+  },
+  "label_distribution": {
+    "true": {
+      "empty": 585,
+      "static_person": 432,
+      "moving_person": 421
+    },
+    "predicted_stage1": {
+      "occupied": 723,
+      "empty": 715
+    },
+    "stage2": {
+      "moving_person": 723
+    }
+  },
+  "per_session_metrics": {
+    "S02": {
+      "label": "static_person",
+      "windows": 223,
+      "recall": 0.9910313901345291,
+      "predicted_occupied": 221,
+      "predicted_empty": 2
+    },
+    "S03": {
+      "label": "moving_person",
+      "windows": 186,
+      "recall": 0.8333333333333334,
+      "predicted_occupied": 155,
+      "predicted_empty": 31
+    },
+    "S04": {
+      "label": "empty",
+      "windows": 328,
+      "recall": 1.0,
+      "predicted_occupied": 0,
+      "predicted_empty": 328
+    },
+    "S05": {
+      "label": "static_person",
+      "windows": 209,
+      "recall": 0.9808612440191388,
+      "predicted_occupied": 205,
+      "predicted_empty": 4
+    },
+    "S06": {
+      "label": "moving_person",
+      "windows": 235,
+      "recall": 0.5914893617021276,
+      "predicted_occupied": 139,
+      "predicted_empty": 96
+    },
+    "S07": {
+      "label": "empty",
+      "windows": 257,
+      "recall": 0.9883268482490273,
+      "predicted_occupied": 3,
+      "predicted_empty": 254
+    }
+  },
+  "target_env": "room4_2026-05-27",
+  "mode": "empty_quantile_threshold",
+  "api_mode": "testclient",
+  "room_id": "room4_2026-05-27__empty_quantile_threshold",
+  "stage1_artifact_id": "stage1_threshold_v001",
+  "stage1_artifact_path": "C:\\이게외않되\\model_server\\artifacts\\models\\stage1\\stage1_threshold_v001",
+  "threshold_source": "calibration empty quantile from API CalibrationProfile",
+  "global_threshold": 2.5068338100224326,
+  "selected_threshold": 8.804143905639648,
+  "effective_threshold": 8.804143905639648,
+  "calibration_method": "empty_quantile_threshold",
+  "calibration_window_count": 81,
+  "excluded_calibration_window_count": 81,
+  "test_window_count": 1438,
+  "calibration_windows_excluded_from_test": true,
+  "baseline_session": "S01",
+  "baseline_rows": 1816,
+  "guided_calibration_session": "S04",
+  "guided_calibration_rows": 5269,
+  "s01_label": "empty",
+  "s04_label": "empty",
+  "scenario_label_source": "scenario.md via csi_pipeline.data.parse_scenario/load_env",
+  "leakage": {
+    "threshold_fitting_source": "metrics_global.json train_groups",
+    "threshold_train_groups": [
+      "room1_2026-04-30",
+      "room1_2026-05-07",
+      "room2_2026-05-05",
+      "room3_2026-05-05_rep01",
+      "room3_2026-05-05_rep02",
+      "room3_2026-05-07"
+    ],
+    "leakage_warning": false,
+    "message": "target_env not found in threshold fitting groups"
+  },
+  "api_state": {
+    "negative_window_rejected": true,
+    "setup_status": {
+      "room_id": "room4_2026-05-27__empty_quantile_threshold",
+      "status": "ready",
+      "baseline_id": "baseline_room4_2026-05-27__empty_quantile_threshold_v001",
+      "calibration_id": "calib_room4_2026-05-27__empty_quantile_threshold_v001",
+      "stage1_artifact_id": "stage1_threshold_v001",
+      "stage2_artifact_id": "stage2_static_moving_v001",
+      "stage2_mode": "static_moving_cnn",
+      "message": "Room is ready for inference."
+    },
+    "latest_result_verified": true
+  },
+  "offline_expected_guided": {
+    "macro_f1": 0.975595,
+    "empty_recall": 0.982906,
+    "occupied_recall": 0.971864,
+    "static_person_recall": 0.99537,
+    "moving_person_recall": 0.947743
+  },
+  "offline_delta_guided": null
+}

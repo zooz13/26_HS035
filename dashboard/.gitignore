@@ -1,0 +1,43 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# local config
+.env
+.env.*
+js/config.js
+js/config.local.js
+
+# AWS / secret keys
+*.pem
+*.key
+*.crt
+credentials
+aws-credentials.json
+
+# logs
+*.log
+logs/
+
+# archives
+*.zip
+*.tar
+*.tar.gz
+
+# frontend deps / build output
+node_modules/
+dist/
+build/
+coverage/
+
+# CSI data / model artifacts
+*.csv
+data/
+datasets/
+models/
+checkpoints/
+*.pt
+*.pth
+*.ckpt

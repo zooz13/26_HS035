@@ -1,0 +1,3 @@
+source,stage2_mode,preprocessing_type,model_type,macro_f1,accuracy,static_recall,moving_recall,stage1_pass_rate,stage1_miss_count,notes
+existing_validated_output,oracle_occupied_stage2,packet_mean_normalized,small_cnn,0.9366207648107787,0.936694021101993,0.8912037037037037,0.9833729216152018,,,Exact target from room4_2026-05-27_full_validation_stage2_v1/stage2_oracle_occupied_results.csv.
+existing_validated_output,cascaded_stage2,packet_mean_normalized,small_cnn,0.9299872704128023,0.9314685314685315,0.9016393442622951,0.9756944444444444,0.8382180539273154,138,Exact target from room4_2026-05-27_full_validation_stage2_v1/stage2_cascaded_results.csv.

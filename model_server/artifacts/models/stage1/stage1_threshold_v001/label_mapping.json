@@ -1,0 +1,9 @@
+{
+  "empty": 0,
+  "occupied": 1,
+  "source_mapping": {
+    "empty": "empty",
+    "static_person": "occupied",
+    "moving_person": "occupied"
+  }
+}

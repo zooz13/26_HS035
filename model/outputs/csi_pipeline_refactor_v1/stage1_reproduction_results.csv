@@ -1,0 +1,2 @@
+source,preprocessing_type,method,macro_f1,empty_recall,occupied_recall,s07_empty_recall,static_after_occupied_recall,moving_after_occupied_recall,notes
+existing_validated_output,gain_mul_corrected,guided 20%,0.9755569820481901,0.9777777777777777,0.9753810082063306,0.9610894941634242,0.9904306220095693,0.9361702127659575,Exact target from room4_2026-05-27_full_validation_stage2_v1/stage1_results.csv.

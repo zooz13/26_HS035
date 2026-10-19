@@ -1,0 +1,110 @@
+{
+  "model_id": "stage1_v001",
+  "train": {
+    "accuracy": 0.8339491916859122,
+    "macro_f1": 0.7637757695780505,
+    "per_label": {
+      "empty": {
+        "precision": 0.922566371681416,
+        "recall": 0.4841331269349845,
+        "f1": 0.6350253807106598
+      },
+      "occupied": {
+        "precision": 0.8174972617743702,
+        "recall": 0.9827188940092166,
+        "f1": 0.892526158445441
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "empty",
+        "occupied"
+      ],
+      "matrix": [
+        [
+          1251,
+          1333
+        ],
+        [
+          105,
+          5971
+        ]
+      ]
+    },
+    "static_person_recall": 0.9877622377622378,
+    "moving_person_recall": 0.9761724659606656
+  },
+  "val": {
+    "accuracy": 0.8957239309827457,
+    "macro_f1": 0.8671744452369773,
+    "per_label": {
+      "empty": {
+        "precision": 0.8700906344410876,
+        "recall": 0.75,
+        "f1": 0.8055944055944056
+      },
+      "occupied": {
+        "precision": 0.9041916167664671,
+        "recall": 0.9546891464699684,
+        "f1": 0.9287544848795489
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "empty",
+        "occupied"
+      ],
+      "matrix": [
+        [
+          288,
+          96
+        ],
+        [
+          43,
+          906
+        ]
+      ]
+    },
+    "static_person_recall": 0.9443413729128015,
+    "moving_person_recall": 0.9682926829268292
+  },
+  "test": {
+    "accuracy": 0.8635593220338983,
+    "macro_f1": 0.8033315010181253,
+    "per_label": {
+      "empty": {
+        "precision": 0.9838709677419355,
+        "recall": 0.5366568914956011,
+        "f1": 0.6944971537001897
+      },
+      "occupied": {
+        "precision": 0.8410462776659959,
+        "recall": 0.9964243146603099,
+        "f1": 0.912165848336061
+      }
+    },
+    "confusion_matrix": {
+      "labels": [
+        "empty",
+        "occupied"
+      ],
+      "matrix": [
+        [
+          183,
+          158
+        ],
+        [
+          3,
+          836
+        ]
+      ]
+    },
+    "static_person_recall": 0.9936575052854123,
+    "moving_person_recall": 1.0
+  },
+  "window_counts": {
+    "train": 8660,
+    "val": 1333,
+    "test": 1180
+  }
+}

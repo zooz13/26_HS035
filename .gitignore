@@ -1,0 +1,55 @@
+# Nested repository metadata copied into component folders
+**/.git/
+**/.git copy/
+
+# Real credentials and machine-specific environment files
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+credentials
+aws-credentials.json
+id_rsa
+id_ed25519
+
+# Local environments, dependencies, caches, and generated builds
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+build/
+dist/
+coverage/
+htmlcov/
+.coverage
+.coverage.*
+
+# OS/editor temporary files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.tmp
+*.bak
+*~
+
+# Runtime logs and local databases
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# Raw CSI captures are retained locally and published separately
+/dataset/**/*.csv

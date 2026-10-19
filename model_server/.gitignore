@@ -1,0 +1,40 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Coverage and test output
+.coverage
+htmlcov/
+
+# Local environments
+.env
+.venv/
+venv/
+
+# OS/editor temporary files
+.DS_Store
+.claude/
+*.log
+*.tmp
+*.bak
+*~
+
+# Local/generated outputs
+outputs/
+outputs_*/
+tmp/
+scratch/
+local_runs/
+run_outputs/
+logs/
+*.sqlite
+*.db
+
+# Large replay/debug logs
+reports/*/api_replay_debug_log.jsonl
+*.jsonl
+reports/*/api_replay_debug_log.jsonl

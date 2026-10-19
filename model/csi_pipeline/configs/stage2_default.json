@@ -1,0 +1,11 @@
+{
+  "stage": "stage2",
+  "type": "small_cnn",
+  "task": "static_vs_moving",
+  "preprocessing_type": "packet_mean_normalized",
+  "label_map": {
+    "static_person": 0,
+    "moving_person": 1
+  }
+}
+

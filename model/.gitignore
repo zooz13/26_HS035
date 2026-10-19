@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS / local
+.DS_Store
+Thumbs.db
+.mplconfig/
+
+# Secrets
+.env
+*.key
+*.pem
+
+# Large/raw/intermediate outputs
+outputs/*
+!outputs/csi_pipeline_refactor_v1/
+!outputs/csi_pipeline_refactor_v1/*.md
+!outputs/csi_pipeline_refactor_v1/*.csv
+
+# Model binaries / caches
+*.npy
+*.npz
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.ckpt
+

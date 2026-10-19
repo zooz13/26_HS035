@@ -1,0 +1,12 @@
+raw_csi_length: 384
+representation: real_imag_interleaved
+amplitude: sqrt_iq
+log_transform: log1p
+normalization: norm_v1_log_amp_empty_robust_zscore
+baseline_source: empty_sessions_per_room_group
+center: median
+scale: mad
+clip_range: [-5.0, 5.0]
+window_size: 128
+stride: 64
+output_shape: [128, 192]

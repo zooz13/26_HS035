@@ -1,0 +1,261 @@
+{
+  "evaluation_type": "target_room_calibrated",
+  "preprocessing_type": "gain_mul_corrected",
+  "segment": "full_buffer",
+  "window_size": 128,
+  "stride": 64,
+  "calibration_policy": {
+    "method": "empty_quantile",
+    "empty_quantile": 0.95,
+    "calibration_windows_excluded_from_test": true
+  },
+  "base_global_threshold": 2.5068338100224326,
+  "holdouts": [
+    {
+      "target_env": "room4_2026-05-20",
+      "baseline_session": "S01",
+      "baseline_rows": 1815,
+      "baseline_seconds_estimate": 20.010375,
+      "baseline_windows": 27,
+      "calibration_session": "S04",
+      "calibration_rows": 9080,
+      "calibration_windows": 140,
+      "calibration_windows_excluded_from_test": true,
+      "global_threshold_reference": 2.5068338100224326,
+      "selected_threshold": 1.3947552502155303,
+      "empty_calibration_score_summary": {
+        "p50": 1.3743526339530945,
+        "p90": 1.3875144839286804,
+        "p95": 1.3947552502155303,
+        "p99": 1.4058910679817198
+      },
+      "score_distribution_summary": {
+        "empty": {
+          "min": 0.9105355739593506,
+          "p50": 1.3658623695373535,
+          "p95": 1.3888258934020996,
+          "max": 1.4463170766830444
+        },
+        "moving_person": {
+          "min": 0.6395747065544128,
+          "p50": 1.2183948755264282,
+          "p95": 1.7330636978149414,
+          "max": 2.001511812210083
+        },
+        "static_person": {
+          "min": 0.8299732208251953,
+          "p50": 1.5153051614761353,
+          "p95": 1.7221619248390199,
+          "max": 1.8643057346343994
+        }
+      },
+      "metrics": {
+        "accuracy": 0.7561919504643962,
+        "macro_f1": 0.7537369381885646,
+        "balanced_accuracy": 0.7805269203438172,
+        "empty_precision": 0.6467836257309941,
+        "empty_recall": 0.9770318021201413,
+        "empty_f1": 0.7783251231527094,
+        "occupied_precision": 0.9702517162471396,
+        "occupied_recall": 0.5840220385674931,
+        "occupied_f1": 0.7291487532244196,
+        "occupied_miss_rate": 0.41597796143250687,
+        "empty_false_alarm_rate": 0.02296819787985871,
+        "num_windows": 1292,
+        "static_person_recall": 0.859504132231405,
+        "moving_person_recall": 0.3085399449035813,
+        "confusion_matrix": [
+          [
+            553,
+            13
+          ],
+          [
+            302,
+            424
+          ]
+        ]
+      },
+      "comparison_protocols": {
+        "guided_baseline_global_threshold": {
+          "description": "Code-path comparison matching csi_pipeline guided recalibration style: merge S01 baseline with S04 empty prefix, keep global threshold, and exclude S04 calibration windows.",
+          "selected_threshold": 2.5068338100224326,
+          "baseline_sessions": [
+            "S01",
+            "S04"
+          ],
+          "baseline_windows": 167,
+          "calibration_windows_excluded_from_test": true,
+          "metrics": {
+            "accuracy": 0.9760061919504643,
+            "macro_f1": 0.9757645875677634,
+            "balanced_accuracy": 0.9786501377410468,
+            "empty_precision": 0.948073701842546,
+            "empty_recall": 1.0,
+            "empty_f1": 0.9733447979363714,
+            "occupied_precision": 1.0,
+            "occupied_recall": 0.9573002754820936,
+            "occupied_f1": 0.9781843771991555,
+            "occupied_miss_rate": 0.04269972451790638,
+            "empty_false_alarm_rate": 0.0,
+            "num_windows": 1292,
+            "static_person_recall": 0.9256198347107438,
+            "moving_person_recall": 0.9889807162534435,
+            "confusion_matrix": [
+              [
+                566,
+                0
+              ],
+              [
+                31,
+                695
+              ]
+            ]
+          },
+          "score_distribution_summary": {
+            "empty": {
+              "min": 0.625323102980731,
+              "p50": 0.8734312723800342,
+              "p95": 1.0072876255820522,
+              "max": 1.6313005685806274
+            },
+            "moving_person": {
+              "min": 2.027064323425293,
+              "p50": 5.705715179443359,
+              "p95": 7.849306917190551,
+              "max": 9.084188461303711
+            },
+            "static_person": {
+              "min": 0.9456346583300701,
+              "p50": 7.0764994621276855,
+              "p95": 7.4220137119293215,
+              "max": 8.64456558227539
+            }
+          }
+        }
+      }
+    },
+    {
+      "target_env": "room4_2026-05-27",
+      "baseline_session": "S01",
+      "baseline_rows": 1816,
+      "baseline_seconds_estimate": 20.008688,
+      "baseline_windows": 27,
+      "calibration_session": "S04",
+      "calibration_rows": 5269,
+      "calibration_windows": 81,
+      "calibration_windows_excluded_from_test": true,
+      "global_threshold_reference": 2.5068338100224326,
+      "selected_threshold": 8.804142951965332,
+      "empty_calibration_score_summary": {
+        "p50": 3.127498149871826,
+        "p90": 7.654075622558594,
+        "p95": 8.804142951965332,
+        "p99": 17.7604476928711
+      },
+      "score_distribution_summary": {
+        "empty": {
+          "min": 1.553537130355835,
+          "p50": 2.294774293899536,
+          "p95": 3.9319978713989245,
+          "max": 20.0
+        },
+        "moving_person": {
+          "min": 2.2693097591400146,
+          "p50": 10.174446105957031,
+          "p95": 17.214252471923828,
+          "max": 20.0
+        },
+        "static_person": {
+          "min": 3.579977190496457,
+          "p50": 17.20545482635498,
+          "p95": 20.0,
+          "max": 20.0
+        }
+      },
+      "metrics": {
+        "accuracy": 0.9054242002781642,
+        "macro_f1": 0.9045450995704802,
+        "balanced_accuracy": 0.9194757567559444,
+        "empty_precision": 0.813986013986014,
+        "empty_recall": 0.9948717948717949,
+        "empty_f1": 0.8953846153846154,
+        "occupied_precision": 0.995850622406639,
+        "occupied_recall": 0.8440797186400938,
+        "occupied_f1": 0.9137055837563451,
+        "occupied_miss_rate": 0.1559202813599062,
+        "empty_false_alarm_rate": 0.00512820512820511,
+        "num_windows": 1438,
+        "static_person_recall": 0.9861111111111112,
+        "moving_person_recall": 0.6983372921615202,
+        "confusion_matrix": [
+          [
+            582,
+            3
+          ],
+          [
+            133,
+            720
+          ]
+        ]
+      },
+      "comparison_protocols": {
+        "guided_baseline_global_threshold": {
+          "description": "Code-path comparison matching csi_pipeline guided recalibration style: merge S01 baseline with S04 empty prefix, keep global threshold, and exclude S04 calibration windows.",
+          "selected_threshold": 2.5068338100224326,
+          "baseline_sessions": [
+            "S01",
+            "S04"
+          ],
+          "baseline_windows": 108,
+          "calibration_windows_excluded_from_test": true,
+          "metrics": {
+            "accuracy": 0.9763560500695411,
+            "macro_f1": 0.9755946105680149,
+            "balanced_accuracy": 0.9773849961423232,
+            "empty_precision": 0.9599332220367279,
+            "empty_recall": 0.9829059829059829,
+            "empty_f1": 0.9712837837837838,
+            "occupied_precision": 0.9880810488676997,
+            "occupied_recall": 0.9718640093786636,
+            "occupied_f1": 0.979905437352246,
+            "occupied_miss_rate": 0.028135990621336426,
+            "empty_false_alarm_rate": 0.017094017094017144,
+            "num_windows": 1438,
+            "static_person_recall": 0.9953703703703703,
+            "moving_person_recall": 0.9477434679334917,
+            "confusion_matrix": [
+              [
+                575,
+                10
+              ],
+              [
+                24,
+                829
+              ]
+            ]
+          },
+          "score_distribution_summary": {
+            "empty": {
+              "min": 0.44426973036810735,
+              "p50": 0.743859052658081,
+              "p95": 1.7174503803253172,
+              "max": 12.160778045654297
+            },
+            "moving_person": {
+              "min": 1.3362367153167725,
+              "p50": 5.35236930847168,
+              "p95": 8.853093147277832,
+              "max": 11.853704452514648
+            },
+            "static_person": {
+              "min": 1.5211778618713174,
+              "p50": 9.224842548370361,
+              "p95": 11.575024223327636,
+              "max": 12.45112419128418
+            }
+          }
+        }
+      }
+    }
+  ]
+}
